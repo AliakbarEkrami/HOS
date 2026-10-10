@@ -1,0 +1,17 @@
+.venv/
+__pycache__/
+*.py[cod]
+*.egg-info/
+.pytest_cache/
+.coverage
+htmlcov/
+build/
+dist/
+tmp/
+**/data/raw/
+**/data/public/
+**/results/
+.env
+.env.*
+!.env.example
+Sources/HOSA(1).PDF

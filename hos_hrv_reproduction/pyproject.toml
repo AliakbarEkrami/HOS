@@ -1,0 +1,27 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "hos-hrv-reproduction"
+version = "0.1.0"
+description = "From-scratch Python reproduction of Chua et al. (2009) HRV HOS/SVM pipeline"
+readme = "README.md"
+requires-python = ">=3.10"
+dependencies = [
+  "numpy>=1.24",
+  "scipy>=1.10",
+  "scikit-learn>=1.2",
+  "wfdb>=4.1",
+]
+
+[project.optional-dependencies]
+dev = ["pytest>=7.4"]
+
+[project.scripts]
+hos-hrv-extract = "hos_hrv_reproduction.cli:extract_main"
+hos-hrv-evaluate = "hos_hrv_reproduction.cli:evaluate_main"
+hos-hrv-stats = "hos_hrv_reproduction.cli:stats_main"
+
+[tool.setuptools.packages.find]
+where = ["src"]

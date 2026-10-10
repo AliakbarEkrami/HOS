@@ -1,0 +1,2 @@
+# Install the local package, its runtime dependencies, and the test runner.
+-e ./hos_hrv_reproduction[dev]

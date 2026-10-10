@@ -1,0 +1,2 @@
+record_id,subject_id,path,label,kind,fs,mains_hz,channel
+record_001,subject_001,data/raw/record_001.npy,NSR,ecg,320,50,0
