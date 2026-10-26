@@ -201,7 +201,9 @@ def _download_verified_file(url, target, checksum):
                     raise OSError(f"Unexpected HTTP status {response.status}")
                 with partial.open("ab" if offset else "wb") as stream:
                     while True:
-                        chunk = response.read(64 * 1024)
+                        # read1 preserves even short socket deliveries before a
+                        # later timeout, rather than waiting to fill a block.
+                        chunk = response.read1(64 * 1024)
                         if not chunk:
                             break
                         stream.write(chunk)
