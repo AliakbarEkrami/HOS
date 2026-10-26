@@ -54,3 +54,26 @@ def test_complete_verified_partial_needs_no_network(tmp_path, monkeypatch):
     protocol._download_verified_file("https://example.invalid/100.dat", target,
                                      hashlib.sha256(payload).hexdigest())
     assert target.read_bytes() == payload
+
+
+def test_socket_timeout_preserves_short_delivery_for_next_range(tmp_path, monkeypatch):
+    payload = b"a short packet then a connection timeout"
+    class TimeoutResponse(Response):
+        def read1(self, size):
+            if self.tell():
+                raise TimeoutError("socket stopped delivering")
+            return super().read1(3)
+    calls = []
+    def open_response(request, timeout):
+        calls.append(dict(request.header_items()))
+        if len(calls) == 1:
+            return TimeoutResponse(payload, 200, **{"Content-Length": str(len(payload))})
+        return Response(payload[3:], 206,
+                        **{"Content-Range": f"bytes 3-{len(payload)-1}/{len(payload)}"})
+    monkeypatch.setattr(protocol, "urlopen", open_response)
+    monkeypatch.setattr(protocol.time, "sleep", lambda _: None)
+    target = tmp_path / "100.dat"
+    protocol._download_verified_file("https://example.invalid/100.dat", target,
+                                     hashlib.sha256(payload).hexdigest())
+    assert calls[1]["Range"] == "bytes=3-"
+    assert target.read_bytes() == payload
