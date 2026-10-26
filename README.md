@@ -38,6 +38,15 @@ metrics, frozen settings, input hashes, subject splits and OOF predictions.
 Installed aliases `mitdb-prepare`, `mitdb-extract`, `mitdb-evaluate`, `mitdb-report`
 provide the same commands. The original paper commands below remain available.
 
+The [completed real-data run](hos_hrv_reproduction/docs/experiments/mitdb_pvc_v1/README.md)
+includes a [Persian report](hos_hrv_reproduction/docs/experiments/mitdb_pvc_v1/report_fa.md),
+figures and archived predictions/settings. It retained **38 segments from 22
+subjects**. Reference-timing balanced accuracy was **89.74% for HOS** versus
+**95.83% for baseline features**; detector-timing HOS reached **96.15%**. These
+small-cohort results do not establish consistent HOS superiority. The archive
+contains conditional bootstrap intervals and local detector errors, including a
+segment with only 65.16% QRS sensitivity. All **103 offline tests** pass.
+
 ## Paper and data
 
 The source paper is included at [Sources/hos_of_hrv.pdf](Sources/hos_of_hrv.pdf). Citation and its separate CC BY-NC 3.0 license are documented in [Sources/README.md](Sources/README.md).

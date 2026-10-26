@@ -1,0 +1,1292 @@
+{
+  "protocol": "mitdb_pvc_v1",
+  "protocol_settings": {
+    "protocol_id": "mitdb_pvc_v1",
+    "dataset_version": "1.0.0",
+    "segment_seconds": 900,
+    "record_seconds": 1800,
+    "expected_fs": 360.0,
+    "low_pvc_max": 0.01,
+    "high_pvc_min": 0.05,
+    "min_beat_purity": 0.99,
+    "min_rhythm_coverage": 0.95,
+    "allowed_beats": [
+      "N",
+      "L",
+      "R",
+      "V"
+    ],
+    "allowed_rhythms": [
+      "(N",
+      "(B",
+      "(T",
+      "(SBR"
+    ],
+    "excluded_records": [
+      "102",
+      "104",
+      "107",
+      "217"
+    ],
+    "max_flatline_seconds": 2.0,
+    "min_blocks": 5,
+    "min_subjects_per_class": 5,
+    "qrs_tolerance_seconds": 0.15,
+    "seed": 20261026
+  },
+  "protocol_deviations": {},
+  "input_hashes": {
+    "manifest": "79239a8a92049939ea334023e9127c57d9438ce81cb91bf102187732fd57c946",
+    "protocol": "d1e4b34d712fd599ccedae15cce2e360e81be882356f86a949c85962dab439e9",
+    "paper_config": "598dd872d9c8676e6674e00864da80b0cb242cda075a44763e4608d973e9e922",
+    "source_files": "c4c989bd930dd97fa05fe7c31d80adf10523a3544752893d1fd88b22ce205edf",
+    "features_reference": "d3da7562cee4e98e0e23765dd8816f84e271e91885a584ae693de6130b249848",
+    "features_detector": "5598a28a55709f90b51b93f9694c8a5c7917665db41c7ed18b494c8b8684a2a6",
+    "extraction": "6602769c516127b59851db2263948a0609ffeebe322a87ad6c0f4f1556d689e0"
+  },
+  "provenance": {
+    "created_utc": "2026-10-26T11:53:22.701205+00:00",
+    "git": {
+      "commit": "3c034c87c612941d622964803bc592d772dedaf6",
+      "status": ""
+    },
+    "packages": {
+      "hos-hrv-reproduction": "0.1.0",
+      "numpy": "2.5.3",
+      "scipy": "1.18.1",
+      "scikit-learn": "1.9.1",
+      "wfdb": "4.3.1",
+      "matplotlib": "3.11.2"
+    }
+  },
+  "frozen_extraction_verified": true,
+  "status": "complete",
+  "seed": 20261026,
+  "cohort": {
+    "manifest_count": 38,
+    "reference_valid_count": 38,
+    "reference_failures": [],
+    "class_counts": {
+      "LOW_PVC": 26,
+      "HIGH_PVC": 12
+    },
+    "subject_counts": {
+      "LOW_PVC": 15,
+      "HIGH_PVC": 7
+    },
+    "n_subjects": 22,
+    "detector_success_count": 38
+  },
+  "split_config": {
+    "outer_splits": 3,
+    "inner_splits": 3,
+    "max_seed_attempts": 100,
+    "selection": "label/group feasibility only"
+  },
+  "bootstrap": {
+    "unit": "subject",
+    "requested_draws": 2000,
+    "confidence": 0.95,
+    "conditional_on_oof_predictions": true,
+    "usable_draws": 2000
+  },
+  "results": [
+    {
+      "source": "reference",
+      "model": "majority",
+      "feature_names": [],
+      "metrics": {
+        "n_segments": 38,
+        "accuracy": 0.6842105263157895,
+        "balanced_accuracy": 0.5,
+        "sensitivity": 0.0,
+        "specificity": 1.0,
+        "f1_positive": 0.0,
+        "f1_macro": 0.40625,
+        "coverage": 1.0,
+        "confusion": [
+          [
+            26,
+            0,
+            0
+          ],
+          [
+            12,
+            0,
+            0
+          ]
+        ],
+        "confusion_rows": [
+          "LOW_PVC",
+          "HIGH_PVC"
+        ],
+        "confusion_columns": [
+          "LOW_PVC",
+          "HIGH_PVC",
+          "ABSTAIN"
+        ],
+        "fold_auc": [
+          null,
+          null,
+          null
+        ]
+      },
+      "folds": [
+        {
+          "fold": 0,
+          "status": "ok",
+          "error": "",
+          "best_params": {},
+          "inner_balanced_accuracy": null,
+          "training_success_count": 25,
+          "test_success_count": 13,
+          "roc_auc": null
+        },
+        {
+          "fold": 1,
+          "status": "ok",
+          "error": "",
+          "best_params": {},
+          "inner_balanced_accuracy": null,
+          "training_success_count": 25,
+          "test_success_count": 13,
+          "roc_auc": null
+        },
+        {
+          "fold": 2,
+          "status": "ok",
+          "error": "",
+          "best_params": {},
+          "inner_balanced_accuracy": null,
+          "training_success_count": 26,
+          "test_success_count": 12,
+          "roc_auc": null
+        }
+      ],
+      "ci": {
+        "balanced_accuracy": [
+          0.5,
+          0.5
+        ],
+        "sensitivity": [
+          0.0,
+          0.0
+        ],
+        "specificity": [
+          1.0,
+          1.0
+        ],
+        "f1_positive": [
+          0.0,
+          0.0
+        ],
+        "f1_macro": [
+          0.327263986013986,
+          0.4657534246575342
+        ]
+      }
+    },
+    {
+      "source": "reference",
+      "model": "baseline",
+      "feature_names": [
+        "mean_rr",
+        "sd_rr",
+        "rmssd_rr",
+        "prr50",
+        "log_vlf_power",
+        "log_lf_power",
+        "log_hf_power",
+        "psd_entropy"
+      ],
+      "metrics": {
+        "n_segments": 38,
+        "accuracy": 0.9736842105263158,
+        "balanced_accuracy": 0.9583333333333333,
+        "sensitivity": 0.9166666666666666,
+        "specificity": 1.0,
+        "f1_positive": 0.9565217391304348,
+        "f1_macro": 0.9688269073010665,
+        "coverage": 1.0,
+        "confusion": [
+          [
+            26,
+            0,
+            0
+          ],
+          [
+            1,
+            11,
+            0
+          ]
+        ],
+        "confusion_rows": [
+          "LOW_PVC",
+          "HIGH_PVC"
+        ],
+        "confusion_columns": [
+          "LOW_PVC",
+          "HIGH_PVC",
+          "ABSTAIN"
+        ],
+        "fold_auc": [
+          1.0,
+          1.0,
+          1.0
+        ]
+      },
+      "folds": [
+        {
+          "fold": 0,
+          "status": "ok",
+          "error": "",
+          "best_params": {
+            "C": 1,
+            "gamma": 0.1
+          },
+          "inner_balanced_accuracy": 0.9444444444444443,
+          "training_success_count": 25,
+          "test_success_count": 13,
+          "roc_auc": 1.0
+        },
+        {
+          "fold": 1,
+          "status": "ok",
+          "error": "",
+          "best_params": {
+            "C": 100,
+            "gamma": 0.01
+          },
+          "inner_balanced_accuracy": 1.0,
+          "training_success_count": 25,
+          "test_success_count": 13,
+          "roc_auc": 1.0
+        },
+        {
+          "fold": 2,
+          "status": "ok",
+          "error": "",
+          "best_params": {
+            "C": 1,
+            "gamma": 0.01
+          },
+          "inner_balanced_accuracy": 0.9444444444444443,
+          "training_success_count": 26,
+          "test_success_count": 12,
+          "roc_auc": 1.0
+        }
+      ],
+      "ci": {
+        "balanced_accuracy": [
+          0.8333333333333333,
+          1.0
+        ],
+        "sensitivity": [
+          0.6666666666666666,
+          1.0
+        ],
+        "specificity": [
+          1.0,
+          1.0
+        ],
+        "f1_positive": [
+          0.8,
+          1.0
+        ],
+        "f1_macro": [
+          0.8745539696699376,
+          1.0
+        ]
+      }
+    },
+    {
+      "source": "reference",
+      "model": "hos",
+      "feature_names": [
+        "P1",
+        "P2",
+        "H1",
+        "H2",
+        "H3",
+        "f1m",
+        "f2m"
+      ],
+      "metrics": {
+        "n_segments": 38,
+        "accuracy": 0.9210526315789473,
+        "balanced_accuracy": 0.8974358974358975,
+        "sensitivity": 0.8333333333333334,
+        "specificity": 0.9615384615384616,
+        "f1_positive": 0.8695652173913043,
+        "f1_macro": 0.9064807219031994,
+        "coverage": 1.0,
+        "confusion": [
+          [
+            25,
+            1,
+            0
+          ],
+          [
+            2,
+            10,
+            0
+          ]
+        ],
+        "confusion_rows": [
+          "LOW_PVC",
+          "HIGH_PVC"
+        ],
+        "confusion_columns": [
+          "LOW_PVC",
+          "HIGH_PVC",
+          "ABSTAIN"
+        ],
+        "fold_auc": [
+          1.0,
+          1.0,
+          1.0
+        ]
+      },
+      "folds": [
+        {
+          "fold": 0,
+          "status": "ok",
+          "error": "",
+          "best_params": {
+            "C": 1,
+            "gamma": "scale"
+          },
+          "inner_balanced_accuracy": 0.9722222222222223,
+          "training_success_count": 25,
+          "test_success_count": 13,
+          "roc_auc": 1.0
+        },
+        {
+          "fold": 1,
+          "status": "ok",
+          "error": "",
+          "best_params": {
+            "C": 1,
+            "gamma": "scale"
+          },
+          "inner_balanced_accuracy": 0.9722222222222223,
+          "training_success_count": 25,
+          "test_success_count": 13,
+          "roc_auc": 1.0
+        },
+        {
+          "fold": 2,
+          "status": "ok",
+          "error": "",
+          "best_params": {
+            "C": 1,
+            "gamma": "scale"
+          },
+          "inner_balanced_accuracy": 1.0,
+          "training_success_count": 26,
+          "test_success_count": 12,
+          "roc_auc": 1.0
+        }
+      ],
+      "ci": {
+        "balanced_accuracy": [
+          0.7891684704184704,
+          1.0
+        ],
+        "sensitivity": [
+          0.625,
+          1.0
+        ],
+        "specificity": [
+          0.8636363636363636,
+          1.0
+        ],
+        "f1_positive": [
+          0.6666666666666666,
+          1.0
+        ],
+        "f1_macro": [
+          0.79,
+          1.0
+        ]
+      }
+    },
+    {
+      "source": "reference",
+      "model": "combined",
+      "feature_names": [
+        "P1",
+        "P2",
+        "H1",
+        "H2",
+        "H3",
+        "f1m",
+        "f2m",
+        "mean_rr",
+        "sd_rr",
+        "rmssd_rr",
+        "prr50",
+        "log_vlf_power",
+        "log_lf_power",
+        "log_hf_power",
+        "psd_entropy"
+      ],
+      "metrics": {
+        "n_segments": 38,
+        "accuracy": 0.9473684210526315,
+        "balanced_accuracy": 0.9391025641025641,
+        "sensitivity": 0.9166666666666666,
+        "specificity": 0.9615384615384616,
+        "f1_positive": 0.9166666666666666,
+        "f1_macro": 0.9391025641025641,
+        "coverage": 1.0,
+        "confusion": [
+          [
+            25,
+            1,
+            0
+          ],
+          [
+            1,
+            11,
+            0
+          ]
+        ],
+        "confusion_rows": [
+          "LOW_PVC",
+          "HIGH_PVC"
+        ],
+        "confusion_columns": [
+          "LOW_PVC",
+          "HIGH_PVC",
+          "ABSTAIN"
+        ],
+        "fold_auc": [
+          1.0,
+          1.0,
+          1.0
+        ]
+      },
+      "folds": [
+        {
+          "fold": 0,
+          "status": "ok",
+          "error": "",
+          "best_params": {
+            "C": 1,
+            "gamma": "scale"
+          },
+          "inner_balanced_accuracy": 0.9166666666666666,
+          "training_success_count": 25,
+          "test_success_count": 13,
+          "roc_auc": 1.0
+        },
+        {
+          "fold": 1,
+          "status": "ok",
+          "error": "",
+          "best_params": {
+            "C": 10,
+            "gamma": 0.01
+          },
+          "inner_balanced_accuracy": 1.0,
+          "training_success_count": 25,
+          "test_success_count": 13,
+          "roc_auc": 1.0
+        },
+        {
+          "fold": 2,
+          "status": "ok",
+          "error": "",
+          "best_params": {
+            "C": 1,
+            "gamma": "scale"
+          },
+          "inner_balanced_accuracy": 1.0,
+          "training_success_count": 26,
+          "test_success_count": 12,
+          "roc_auc": 1.0
+        }
+      ],
+      "ci": {
+        "balanced_accuracy": [
+          0.8140948275862069,
+          1.0
+        ],
+        "sensitivity": [
+          0.6666666666666666,
+          1.0
+        ],
+        "specificity": [
+          0.8636363636363636,
+          1.0
+        ],
+        "f1_positive": [
+          0.7058823529411765,
+          1.0
+        ],
+        "f1_macro": [
+          0.8095238095238095,
+          1.0
+        ]
+      }
+    },
+    {
+      "source": "detector",
+      "model": "majority",
+      "feature_names": [],
+      "metrics": {
+        "n_segments": 38,
+        "accuracy": 0.6842105263157895,
+        "balanced_accuracy": 0.5,
+        "sensitivity": 0.0,
+        "specificity": 1.0,
+        "f1_positive": 0.0,
+        "f1_macro": 0.40625,
+        "coverage": 1.0,
+        "confusion": [
+          [
+            26,
+            0,
+            0
+          ],
+          [
+            12,
+            0,
+            0
+          ]
+        ],
+        "confusion_rows": [
+          "LOW_PVC",
+          "HIGH_PVC"
+        ],
+        "confusion_columns": [
+          "LOW_PVC",
+          "HIGH_PVC",
+          "ABSTAIN"
+        ],
+        "fold_auc": [
+          null,
+          null,
+          null
+        ]
+      },
+      "folds": [
+        {
+          "fold": 0,
+          "status": "ok",
+          "error": "",
+          "best_params": {},
+          "inner_balanced_accuracy": null,
+          "training_success_count": 25,
+          "test_success_count": 13,
+          "roc_auc": null
+        },
+        {
+          "fold": 1,
+          "status": "ok",
+          "error": "",
+          "best_params": {},
+          "inner_balanced_accuracy": null,
+          "training_success_count": 25,
+          "test_success_count": 13,
+          "roc_auc": null
+        },
+        {
+          "fold": 2,
+          "status": "ok",
+          "error": "",
+          "best_params": {},
+          "inner_balanced_accuracy": null,
+          "training_success_count": 26,
+          "test_success_count": 12,
+          "roc_auc": null
+        }
+      ],
+      "ci": {
+        "balanced_accuracy": [
+          0.5,
+          0.5
+        ],
+        "sensitivity": [
+          0.0,
+          0.0
+        ],
+        "specificity": [
+          1.0,
+          1.0
+        ],
+        "f1_positive": [
+          0.0,
+          0.0
+        ],
+        "f1_macro": [
+          0.327263986013986,
+          0.4657534246575342
+        ]
+      }
+    },
+    {
+      "source": "detector",
+      "model": "baseline",
+      "feature_names": [
+        "mean_rr",
+        "sd_rr",
+        "rmssd_rr",
+        "prr50",
+        "log_vlf_power",
+        "log_lf_power",
+        "log_hf_power",
+        "psd_entropy"
+      ],
+      "metrics": {
+        "n_segments": 38,
+        "accuracy": 0.8947368421052632,
+        "balanced_accuracy": 0.8782051282051282,
+        "sensitivity": 0.8333333333333334,
+        "specificity": 0.9230769230769231,
+        "f1_positive": 0.8333333333333334,
+        "f1_macro": 0.8782051282051282,
+        "coverage": 1.0,
+        "confusion": [
+          [
+            24,
+            2,
+            0
+          ],
+          [
+            2,
+            10,
+            0
+          ]
+        ],
+        "confusion_rows": [
+          "LOW_PVC",
+          "HIGH_PVC"
+        ],
+        "confusion_columns": [
+          "LOW_PVC",
+          "HIGH_PVC",
+          "ABSTAIN"
+        ],
+        "fold_auc": [
+          1.0,
+          0.9166666666666666,
+          1.0
+        ]
+      },
+      "folds": [
+        {
+          "fold": 0,
+          "status": "ok",
+          "error": "",
+          "best_params": {
+            "C": 1,
+            "gamma": "scale"
+          },
+          "inner_balanced_accuracy": 0.8333333333333334,
+          "training_success_count": 25,
+          "test_success_count": 13,
+          "roc_auc": 1.0
+        },
+        {
+          "fold": 1,
+          "status": "ok",
+          "error": "",
+          "best_params": {
+            "C": 1,
+            "gamma": "scale"
+          },
+          "inner_balanced_accuracy": 0.888888888888889,
+          "training_success_count": 25,
+          "test_success_count": 13,
+          "roc_auc": 0.9166666666666666
+        },
+        {
+          "fold": 2,
+          "status": "ok",
+          "error": "",
+          "best_params": {
+            "C": 1,
+            "gamma": 0.01
+          },
+          "inner_balanced_accuracy": 0.9444444444444445,
+          "training_success_count": 26,
+          "test_success_count": 12,
+          "roc_auc": 1.0
+        }
+      ],
+      "ci": {
+        "balanced_accuracy": [
+          0.7258547008547008,
+          0.9827586206896552
+        ],
+        "sensitivity": [
+          0.571031746031746,
+          1.0
+        ],
+        "specificity": [
+          0.7893796992481203,
+          1.0
+        ],
+        "f1_positive": [
+          0.5714285714285714,
+          0.9655172413793104
+        ],
+        "f1_macro": [
+          0.72140756302521,
+          0.972558414372
+        ]
+      }
+    },
+    {
+      "source": "detector",
+      "model": "hos",
+      "feature_names": [
+        "P1",
+        "P2",
+        "H1",
+        "H2",
+        "H3",
+        "f1m",
+        "f2m"
+      ],
+      "metrics": {
+        "n_segments": 38,
+        "accuracy": 0.9473684210526315,
+        "balanced_accuracy": 0.9615384615384616,
+        "sensitivity": 1.0,
+        "specificity": 0.9230769230769231,
+        "f1_positive": 0.9230769230769231,
+        "f1_macro": 0.9415384615384615,
+        "coverage": 1.0,
+        "confusion": [
+          [
+            24,
+            2,
+            0
+          ],
+          [
+            0,
+            12,
+            0
+          ]
+        ],
+        "confusion_rows": [
+          "LOW_PVC",
+          "HIGH_PVC"
+        ],
+        "confusion_columns": [
+          "LOW_PVC",
+          "HIGH_PVC",
+          "ABSTAIN"
+        ],
+        "fold_auc": [
+          1.0,
+          0.9444444444444444,
+          1.0
+        ]
+      },
+      "folds": [
+        {
+          "fold": 0,
+          "status": "ok",
+          "error": "",
+          "best_params": {
+            "C": 1,
+            "gamma": 0.01
+          },
+          "inner_balanced_accuracy": 0.8888888888888888,
+          "training_success_count": 25,
+          "test_success_count": 13,
+          "roc_auc": 1.0
+        },
+        {
+          "fold": 1,
+          "status": "ok",
+          "error": "",
+          "best_params": {
+            "C": 1,
+            "gamma": "scale"
+          },
+          "inner_balanced_accuracy": 0.9722222222222223,
+          "training_success_count": 25,
+          "test_success_count": 13,
+          "roc_auc": 0.9444444444444444
+        },
+        {
+          "fold": 2,
+          "status": "ok",
+          "error": "",
+          "best_params": {
+            "C": 1,
+            "gamma": "scale"
+          },
+          "inner_balanced_accuracy": 0.9722222222222223,
+          "training_success_count": 26,
+          "test_success_count": 12,
+          "roc_auc": 1.0
+        }
+      ],
+      "ci": {
+        "balanced_accuracy": [
+          0.8946898496240602,
+          1.0
+        ],
+        "sensitivity": [
+          1.0,
+          1.0
+        ],
+        "specificity": [
+          0.7893796992481203,
+          1.0
+        ],
+        "f1_positive": [
+          0.7366028708133971,
+          1.0
+        ],
+        "f1_macro": [
+          0.8193634111253197,
+          1.0
+        ]
+      }
+    },
+    {
+      "source": "detector",
+      "model": "combined",
+      "feature_names": [
+        "P1",
+        "P2",
+        "H1",
+        "H2",
+        "H3",
+        "f1m",
+        "f2m",
+        "mean_rr",
+        "sd_rr",
+        "rmssd_rr",
+        "prr50",
+        "log_vlf_power",
+        "log_lf_power",
+        "log_hf_power",
+        "psd_entropy"
+      ],
+      "metrics": {
+        "n_segments": 38,
+        "accuracy": 0.9473684210526315,
+        "balanced_accuracy": 0.9615384615384616,
+        "sensitivity": 1.0,
+        "specificity": 0.9230769230769231,
+        "f1_positive": 0.9230769230769231,
+        "f1_macro": 0.9415384615384615,
+        "coverage": 1.0,
+        "confusion": [
+          [
+            24,
+            2,
+            0
+          ],
+          [
+            0,
+            12,
+            0
+          ]
+        ],
+        "confusion_rows": [
+          "LOW_PVC",
+          "HIGH_PVC"
+        ],
+        "confusion_columns": [
+          "LOW_PVC",
+          "HIGH_PVC",
+          "ABSTAIN"
+        ],
+        "fold_auc": [
+          1.0,
+          0.8888888888888888,
+          0.96875
+        ]
+      },
+      "folds": [
+        {
+          "fold": 0,
+          "status": "ok",
+          "error": "",
+          "best_params": {
+            "C": 1,
+            "gamma": 0.01
+          },
+          "inner_balanced_accuracy": 0.9166666666666666,
+          "training_success_count": 25,
+          "test_success_count": 13,
+          "roc_auc": 1.0
+        },
+        {
+          "fold": 1,
+          "status": "ok",
+          "error": "",
+          "best_params": {
+            "C": 1,
+            "gamma": 0.01
+          },
+          "inner_balanced_accuracy": 0.9722222222222223,
+          "training_success_count": 25,
+          "test_success_count": 13,
+          "roc_auc": 0.8888888888888888
+        },
+        {
+          "fold": 2,
+          "status": "ok",
+          "error": "",
+          "best_params": {
+            "C": 1,
+            "gamma": 0.01
+          },
+          "inner_balanced_accuracy": 0.9722222222222223,
+          "training_success_count": 26,
+          "test_success_count": 12,
+          "roc_auc": 0.96875
+        }
+      ],
+      "ci": {
+        "balanced_accuracy": [
+          0.8946898496240602,
+          1.0
+        ],
+        "sensitivity": [
+          1.0,
+          1.0
+        ],
+        "specificity": [
+          0.7893796992481203,
+          1.0
+        ],
+        "f1_positive": [
+          0.7366028708133971,
+          1.0
+        ],
+        "f1_macro": [
+          0.8193634111253197,
+          1.0
+        ]
+      }
+    }
+  ],
+  "comparisons": {
+    "hos_minus_baseline": [
+      {
+        "source": "reference",
+        "balanced_accuracy_difference": -0.06089743589743579,
+        "ci": [
+          -0.1985802611367128,
+          0.11538461538461542
+        ]
+      },
+      {
+        "source": "detector",
+        "balanced_accuracy_difference": 0.08333333333333337,
+        "ci": [
+          0.0,
+          0.21448412698412603
+        ]
+      }
+    ],
+    "paired_sources": [
+      {
+        "model": "majority",
+        "n_segments": 38,
+        "n_subjects": 22,
+        "reference_metrics": {
+          "n_segments": 38,
+          "accuracy": 0.6842105263157895,
+          "balanced_accuracy": 0.5,
+          "sensitivity": 0.0,
+          "specificity": 1.0,
+          "f1_positive": 0.0,
+          "f1_macro": 0.40625,
+          "coverage": 1.0,
+          "confusion": [
+            [
+              26,
+              0,
+              0
+            ],
+            [
+              12,
+              0,
+              0
+            ]
+          ],
+          "confusion_rows": [
+            "LOW_PVC",
+            "HIGH_PVC"
+          ],
+          "confusion_columns": [
+            "LOW_PVC",
+            "HIGH_PVC",
+            "ABSTAIN"
+          ]
+        },
+        "detector_metrics": {
+          "n_segments": 38,
+          "accuracy": 0.6842105263157895,
+          "balanced_accuracy": 0.5,
+          "sensitivity": 0.0,
+          "specificity": 1.0,
+          "f1_positive": 0.0,
+          "f1_macro": 0.40625,
+          "coverage": 1.0,
+          "confusion": [
+            [
+              26,
+              0,
+              0
+            ],
+            [
+              12,
+              0,
+              0
+            ]
+          ],
+          "confusion_rows": [
+            "LOW_PVC",
+            "HIGH_PVC"
+          ],
+          "confusion_columns": [
+            "LOW_PVC",
+            "HIGH_PVC",
+            "ABSTAIN"
+          ]
+        },
+        "difference_detector_minus_reference": 0.0,
+        "ci": [
+          0.0,
+          0.0
+        ]
+      },
+      {
+        "model": "baseline",
+        "n_segments": 38,
+        "n_subjects": 22,
+        "reference_metrics": {
+          "n_segments": 38,
+          "accuracy": 0.9736842105263158,
+          "balanced_accuracy": 0.9583333333333333,
+          "sensitivity": 0.9166666666666666,
+          "specificity": 1.0,
+          "f1_positive": 0.9565217391304348,
+          "f1_macro": 0.9688269073010665,
+          "coverage": 1.0,
+          "confusion": [
+            [
+              26,
+              0,
+              0
+            ],
+            [
+              1,
+              11,
+              0
+            ]
+          ],
+          "confusion_rows": [
+            "LOW_PVC",
+            "HIGH_PVC"
+          ],
+          "confusion_columns": [
+            "LOW_PVC",
+            "HIGH_PVC",
+            "ABSTAIN"
+          ]
+        },
+        "detector_metrics": {
+          "n_segments": 38,
+          "accuracy": 0.8947368421052632,
+          "balanced_accuracy": 0.8782051282051282,
+          "sensitivity": 0.8333333333333334,
+          "specificity": 0.9230769230769231,
+          "f1_positive": 0.8333333333333334,
+          "f1_macro": 0.8782051282051282,
+          "coverage": 1.0,
+          "confusion": [
+            [
+              24,
+              2,
+              0
+            ],
+            [
+              2,
+              10,
+              0
+            ]
+          ],
+          "confusion_rows": [
+            "LOW_PVC",
+            "HIGH_PVC"
+          ],
+          "confusion_columns": [
+            "LOW_PVC",
+            "HIGH_PVC",
+            "ABSTAIN"
+          ]
+        },
+        "difference_detector_minus_reference": -0.08012820512820507,
+        "ci": [
+          -0.18751469435736676,
+          0.0
+        ]
+      },
+      {
+        "model": "hos",
+        "n_segments": 38,
+        "n_subjects": 22,
+        "reference_metrics": {
+          "n_segments": 38,
+          "accuracy": 0.9210526315789473,
+          "balanced_accuracy": 0.8974358974358975,
+          "sensitivity": 0.8333333333333334,
+          "specificity": 0.9615384615384616,
+          "f1_positive": 0.8695652173913043,
+          "f1_macro": 0.9064807219031994,
+          "coverage": 1.0,
+          "confusion": [
+            [
+              25,
+              1,
+              0
+            ],
+            [
+              2,
+              10,
+              0
+            ]
+          ],
+          "confusion_rows": [
+            "LOW_PVC",
+            "HIGH_PVC"
+          ],
+          "confusion_columns": [
+            "LOW_PVC",
+            "HIGH_PVC",
+            "ABSTAIN"
+          ]
+        },
+        "detector_metrics": {
+          "n_segments": 38,
+          "accuracy": 0.9473684210526315,
+          "balanced_accuracy": 0.9615384615384616,
+          "sensitivity": 1.0,
+          "specificity": 0.9230769230769231,
+          "f1_positive": 0.9230769230769231,
+          "f1_macro": 0.9415384615384615,
+          "coverage": 1.0,
+          "confusion": [
+            [
+              24,
+              2,
+              0
+            ],
+            [
+              0,
+              12,
+              0
+            ]
+          ],
+          "confusion_rows": [
+            "LOW_PVC",
+            "HIGH_PVC"
+          ],
+          "confusion_columns": [
+            "LOW_PVC",
+            "HIGH_PVC",
+            "ABSTAIN"
+          ]
+        },
+        "difference_detector_minus_reference": 0.0641025641025641,
+        "ci": [
+          -0.038461538461538436,
+          0.16666666666666674
+        ]
+      },
+      {
+        "model": "combined",
+        "n_segments": 38,
+        "n_subjects": 22,
+        "reference_metrics": {
+          "n_segments": 38,
+          "accuracy": 0.9473684210526315,
+          "balanced_accuracy": 0.9391025641025641,
+          "sensitivity": 0.9166666666666666,
+          "specificity": 0.9615384615384616,
+          "f1_positive": 0.9166666666666666,
+          "f1_macro": 0.9391025641025641,
+          "coverage": 1.0,
+          "confusion": [
+            [
+              25,
+              1,
+              0
+            ],
+            [
+              1,
+              11,
+              0
+            ]
+          ],
+          "confusion_rows": [
+            "LOW_PVC",
+            "HIGH_PVC"
+          ],
+          "confusion_columns": [
+            "LOW_PVC",
+            "HIGH_PVC",
+            "ABSTAIN"
+          ]
+        },
+        "detector_metrics": {
+          "n_segments": 38,
+          "accuracy": 0.9473684210526315,
+          "balanced_accuracy": 0.9615384615384616,
+          "sensitivity": 1.0,
+          "specificity": 0.9230769230769231,
+          "f1_positive": 0.9230769230769231,
+          "f1_macro": 0.9415384615384615,
+          "coverage": 1.0,
+          "confusion": [
+            [
+              24,
+              2,
+              0
+            ],
+            [
+              0,
+              12,
+              0
+            ]
+          ],
+          "confusion_rows": [
+            "LOW_PVC",
+            "HIGH_PVC"
+          ],
+          "confusion_columns": [
+            "LOW_PVC",
+            "HIGH_PVC",
+            "ABSTAIN"
+          ]
+        },
+        "difference_detector_minus_reference": 0.022435897435897467,
+        "ci": [
+          -0.05420138888888892,
+          0.15000000000000002
+        ]
+      }
+    ]
+  },
+  "notes": [
+    "Positive class is HIGH_PVC (y=1); threshold is zero.",
+    "All QC-included manifest segments define the primary intention-to-process cohort.",
+    "Reference and detector extraction failures remain abstentions and count as incorrect.",
+    "Feature matrices use a fixed allowlist; annotation counts are never predictors.",
+    "Cluster bootstrap uncertainty is conditional on these OOF model fits."
+  ]
+}

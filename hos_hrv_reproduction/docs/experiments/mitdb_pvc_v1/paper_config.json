@@ -1,0 +1,21 @@
+{
+  "ecg_target_fs": 320.0,
+  "hrv_fs": 4.0,
+  "block_size": 1024,
+  "overlap": 512,
+  "lowpass_hz": 35.0,
+  "highpass_hz": 0.3,
+  "filter_order": 4,
+  "notch_q": 30.0,
+  "median_seconds": 0.6,
+  "refractory_seconds": 0.2,
+  "interpolation": "linear",
+  "window": "hann",
+  "detrend": true,
+  "fft_scaling": "raw",
+  "include_dc": true,
+  "normalize_entropy": true,
+  "log_base": "e",
+  "log_floor": 1e-12,
+  "index_origin": 1
+}

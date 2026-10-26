@@ -2,6 +2,13 @@
 
 ## Current status
 
+- The first full real-data experiment is complete: 144 official hashes verified,
+  38 accepted segments from 22 subjects, both branches extracted 38/38, and 304
+  OOF predictions audited. See the [results snapshot and interpretation](hos_hrv_reproduction/docs/experiments/mitdb_pvc_v1/README.md)
+  and [Persian report](hos_hrv_reproduction/docs/experiments/mitdb_pvc_v1/report_fa.md).
+  Reference HOS balanced accuracy is 89.74% versus baseline 95.83%; detector HOS
+  is 96.15%. This does not establish consistent HOS superiority. Local detector
+  errors and conditional confidence intervals are retained. All 103 tests pass.
 - The Python implementation now includes a frozen `mitdb_pvc_v1` public-data
   experiment alongside the original `extract`, `stats` and `evaluate` commands.
 - Its research target is **LOW_PVC** (at most 1% V beats) versus **HIGH_PVC**

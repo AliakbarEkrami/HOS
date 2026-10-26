@@ -126,7 +126,7 @@ The reference article is kept in the sibling [`Sources/`](../Sources/README.md) 
 
 The original paper's 330 ECG records are not attached to the article and no public download or repository for that exact collection was found. The paper says that the recordings were collected by the authors at Kasturba Medical College Hospital, Manipal, India, from more than 330 patients, digitized at 320 samples/s, and divided into NSR (183), PVC (37), CHB (42), SSS (43), and CHF (25). Those counts sum to 330.
 
-Consequently, an exact rerun of the published confusion matrix is currently blocked. The implementation provides input support for original recordings if obtained from the authors or hospital, but still needs real-data validation and resolution of methodological ambiguities. Public PhysioNet records can validate the method on different cohorts and must not be presented as an exact replication.
+Consequently, an exact rerun of the published confusion matrix is currently blocked. The implementation provides input support for original recordings if obtained from the authors or hospital. The adapted [public MIT-BIH experiment](docs/experiments/mitdb_pvc_v1/README.md) is now complete on 38 segments from 22 subjects; its results and limitations are in the [Persian report](docs/experiments/mitdb_pvc_v1/report_fa.md). This is a different cohort and target, and does not resolve the original paper's methodological ambiguities or establish exact replication.
 
 The article also leaves several details unstated. They are exposed in `PaperConfig` rather than hidden in the code:
 

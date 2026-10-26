@@ -1,0 +1,25 @@
+{
+  "protocol_id": "mitdb_pvc_v1",
+  "dataset_version": "1.0.0",
+  "candidate_segments": 96,
+  "included_segments": 38,
+  "excluded_segments": 58,
+  "class_counts": {
+    "LOW_PVC": {
+      "segments": 26,
+      "subjects": 15
+    },
+    "HIGH_PVC": {
+      "segments": 12,
+      "subjects": 7
+    }
+  },
+  "n_subjects": 22,
+  "exclusion_counts": {
+    "beat_purity": 28,
+    "paced_record": 8,
+    "intermediate_pvc_burden": 15,
+    "rhythm_coverage": 23
+  },
+  "status": "ready"
+}

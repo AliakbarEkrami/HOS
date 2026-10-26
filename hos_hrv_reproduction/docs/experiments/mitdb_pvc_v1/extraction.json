@@ -1,0 +1,55 @@
+{
+  "sources": {
+    "reference": {
+      "ok": 38
+    },
+    "detector": {
+      "ok": 38
+    }
+  },
+  "protocol_id": "mitdb_pvc_v1",
+  "paper_config": {
+    "ecg_target_fs": 320.0,
+    "hrv_fs": 4.0,
+    "block_size": 1024,
+    "overlap": 512,
+    "lowpass_hz": 35.0,
+    "highpass_hz": 0.3,
+    "filter_order": 4,
+    "notch_q": 30.0,
+    "median_seconds": 0.6,
+    "refractory_seconds": 0.2,
+    "interpolation": "linear",
+    "window": "hann",
+    "detrend": true,
+    "fft_scaling": "raw",
+    "include_dc": true,
+    "normalize_entropy": true,
+    "log_base": "e",
+    "log_floor": 1e-12,
+    "index_origin": 1
+  },
+  "manifest_sha256": "79239a8a92049939ea334023e9127c57d9438ce81cb91bf102187732fd57c946",
+  "protocol_sha256": "d1e4b34d712fd599ccedae15cce2e360e81be882356f86a949c85962dab439e9",
+  "paper_config_sha256": "598dd872d9c8676e6674e00864da80b0cb242cda075a44763e4608d973e9e922",
+  "source_files_sha256": "c4c989bd930dd97fa05fe7c31d80adf10523a3544752893d1fd88b22ce205edf",
+  "feature_files": {
+    "reference": "d3da7562cee4e98e0e23765dd8816f84e271e91885a584ae693de6130b249848",
+    "detector": "5598a28a55709f90b51b93f9694c8a5c7917665db41c7ed18b494c8b8684a2a6"
+  },
+  "provenance": {
+    "created_utc": "2026-10-26T11:53:22.615416+00:00",
+    "git": {
+      "commit": "3c034c87c612941d622964803bc592d772dedaf6",
+      "status": ""
+    },
+    "packages": {
+      "hos-hrv-reproduction": "0.1.0",
+      "numpy": "2.5.3",
+      "scipy": "1.18.1",
+      "scikit-learn": "1.9.1",
+      "wfdb": "4.3.1",
+      "matplotlib": "3.11.2"
+    }
+  }
+}
