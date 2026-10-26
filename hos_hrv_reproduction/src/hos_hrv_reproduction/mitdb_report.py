@@ -407,6 +407,25 @@ def report_mitdb(run_dir: str | Path) -> Path:
         mae_weight = sum(_number(row.get("tp")) or 0 for row in qrs if _number(row.get("timing_mae_ms")) is not None)
         tolerance_ms = 1000 * float(protocol_settings.get("qrs_tolerance_seconds", 0.15))
         lines.extend(["", f"تطبیق قله‌های آشکارساز با مرجع یک‌به‌یک و با تلورانس {tolerance_ms:g} میلی‌ثانیه است. شاخص‌های زیر از مجموع TP/FP/FN قطعات محاسبه شده‌اند:", "", *(_table(["TP", "FP", "FN", "حساسیت", "ارزش اخباری مثبت", "MAE زمانی"], [[int(tp), int(fp), int(fn), _pct(tp / (tp + fn)) if tp + fn else "ثبت نشده", _pct(tp / (tp + fp)) if tp + fp else "ثبت نشده", f"{weighted_mae / mae_weight:.2f} ms" if mae_weight else "ثبت نشده"]]))])
+        ranked_qrs = sorted(
+            [row for row in qrs if _successful(row) and _number(row.get("sensitivity")) is not None],
+            key=lambda row: (float(row["sensitivity"]), row.get("segment_id", "")),
+        )[:5]
+        if ranked_qrs:
+            lines.extend(["", "پنج قطعه با کمترین حساسیت آشکارسازی در میان قطعات دارای نتیجهٔ معتبر:", "", *(_table(
+                ["قطعه", "حساسیت", "ارزش اخباری مثبت", "TP", "FP", "FN", "MAE زمانی"],
+                [[row.get("segment_id", "?"), _pct(row.get("sensitivity")), _pct(row.get("ppv")),
+                  _count(row.get("tp")), _count(row.get("fp")), _count(row.get("fn")),
+                  f"{float(row['timing_mae_ms']):.2f} ms" if _number(row.get("timing_mae_ms")) is not None else "ثبت نشده"]
+                 for row in ranked_qrs],
+            )), ""])
+        failed_qrs = [row for row in qrs if not _successful(row)]
+        if failed_qrs:
+            lines.extend(["", "تمام شکست‌های ثبت‌شده در ارزیابی QRS؛ این قطعات از نمایش خطاها حذف نشده‌اند:", "", *(_table(
+                ["قطعه", "وضعیت", "پیام خطا"],
+                [[row.get("segment_id", "?"), row.get("status", "ثبت نشده"), row.get("error", "ثبت نشده")] for row in failed_qrs],
+            )), ""])
+        lines.extend(["شاخص‌های تجمیعی خوب می‌توانند خطای زیاد در بعضی قطعات را پنهان کنند؛ جدول قطعات و فایل qrs_metrics.csv باید همراه مجموع‌ها بررسی شوند. بهتر بودن دقت طبقه‌بندی در مسیر آشکارساز نسبت به مسیر مرجع، به‌تنهایی نشانهٔ اندازه‌گیری دقیق‌تر ECG یا ضربان‌ها نیست؛ خطاهای آشکارساز نیز می‌توانند ویژگی‌ها و تصمیم مدل را تغییر دهند.", ""])
     lines.extend(["", "## ارزیابی طبقه‌بندی", ""])
     status = evaluation.get("status", "not_available")
     lines.extend([f"وضعیت ثبت‌شده: `{_safe_text(status)}`.", ""])

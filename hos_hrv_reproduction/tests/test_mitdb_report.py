@@ -60,7 +60,7 @@ def test_report_complete_uses_saved_metrics_and_example_assets(tmp_path):
             "paired_sources": [{"model": "hos", "n_segments": 2, "reference_metrics": {"balanced_accuracy": 0.75}, "detector_metrics": {"balanced_accuracy": 0.5}}],
         },
     })
-    _csv(tmp_path / "qrs_metrics.csv", [{"segment_id": "s0", "tp": 4, "fp": 1, "fn": 1, "timing_mae_ms": 10}])
+    _csv(tmp_path / "qrs_metrics.csv", [{"segment_id": "s0", "status": "ok", "tp": 4, "fp": 1, "fn": 1, "sensitivity": 0.8, "ppv": 0.8, "timing_mae_ms": 10}])
     examples_dir = tmp_path / "examples"
     examples_dir.mkdir()
     times = np.arange(400) / 40
@@ -75,6 +75,8 @@ def test_report_complete_uses_saved_metrics_and_example_assets(tmp_path):
     assert "50.0% تا 100.0%" in text
     assert "-10.0 واحد درصد" in text
     assert "10.00 ms" in text
+    assert "پنج قطعه با کمترین حساسیت" in text
+    assert "اندازه‌گیری دقیق‌تر ECG" in text
     assert "مشترک" in text
     assert "شکست استخراج در هر یک از مسیرهای مرجع و آشکارساز" in text
     assert "مخرج ارزیابی اصلی را تغییر نمی‌دهد" in text
@@ -140,3 +142,25 @@ def test_report_displays_custom_protocol_levels_and_recorded_processing(tmp_path
     assert "[extraction.json]" in text
     assert "[source_files.json]" in text
     assert "[provenance.json]" in text
+
+
+def test_qrs_worst_five_are_ranked_and_all_failed_segments_remain_visible(tmp_path):
+    rows = [
+        {"segment_id": f"q{i}", "status": "ok", "error": "", "tp": i,
+         "fp": 0, "fn": 10-i, "sensitivity": i/10, "ppv": 1.0, "timing_mae_ms": i}
+        for i in range(7, 0, -1)
+    ]
+    rows.extend([
+        {"segment_id": f"failed{i}", "status": "failed", "error": f"signal_error_{i}",
+         "tp": "", "fp": "", "fn": "", "sensitivity": "", "ppv": "", "timing_mae_ms": ""}
+        for i in range(6)
+    ])
+    _csv(tmp_path / "qrs_metrics.csv", rows)
+    text = report_mitdb(tmp_path).read_text(encoding="utf-8")
+    positions = [text.index(f"| q{i} |") for i in range(1, 6)]
+    assert positions == sorted(positions)
+    assert "| q6 |" not in text and "| q7 |" not in text
+    assert "تمام شکست‌های ثبت‌شده" in text
+    for i in range(6):
+        assert f"failed{i}" in text
+        assert f"signal_error_{i}" in text
