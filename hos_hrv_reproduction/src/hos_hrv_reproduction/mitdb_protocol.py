@@ -7,6 +7,7 @@ from collections import Counter
 from concurrent.futures import ThreadPoolExecutor, as_completed
 from dataclasses import asdict, dataclass, fields
 from fractions import Fraction
+from http.client import HTTPException
 import json
 from pathlib import Path
 from urllib.request import Request, urlopen
@@ -161,10 +162,62 @@ def _request_bytes(url):
             with urlopen(Request(url, headers={"User-Agent": "HOS-academic-reproduction/0.2"}),
                          timeout=30) as stream:
                 return stream.read()
-        except (OSError, TimeoutError) as exc:
+        except (OSError, HTTPException) as exc:
             last_error = exc
             if attempt < 2:
                 time.sleep(attempt + 1)
+    raise RuntimeError(f"Download failed: {url}: {last_error}") from last_error
+
+
+def _download_verified_file(url, target, checksum):
+    """Keep interrupted transfers and resume HTTP ranges; publish only verified bytes."""
+    target = Path(target)
+    if target.exists() and sha256_file(target) == checksum:
+        return
+    partial = target.with_suffix(target.suffix + ".part")
+    last_error = None
+    for attempt in range(5):
+        if partial.exists() and sha256_file(partial) == checksum:
+            partial.replace(target)
+            return
+        offset = partial.stat().st_size if partial.exists() else 0
+        headers = {"User-Agent": "HOS-academic-reproduction/0.2"}
+        if offset:
+            headers["Range"] = f"bytes={offset}-"
+        try:
+            with urlopen(Request(url, headers=headers), timeout=30) as response:
+                if response.status == 206:
+                    match = re.fullmatch(r"bytes (\d+)-(\d+)/(\d+)",
+                                         response.headers.get("Content-Range", ""))
+                    if not match or int(match[1]) != offset:
+                        raise OSError("Server returned an inconsistent byte range")
+                    total = int(match[3])
+                elif response.status == 200:
+                    # A server may ignore Range. Safely restart, without appending.
+                    offset = 0
+                    length = response.headers.get("Content-Length")
+                    total = int(length) if length else None
+                else:
+                    raise OSError(f"Unexpected HTTP status {response.status}")
+                with partial.open("ab" if offset else "wb") as stream:
+                    while True:
+                        chunk = response.read(64 * 1024)
+                        if not chunk:
+                            break
+                        stream.write(chunk)
+            if total is not None and partial.stat().st_size < total:
+                raise OSError("Connection ended before the advertised file length")
+            if sha256_file(partial) != checksum:
+                partial.unlink()
+                raise ValueError("Checksum mismatch downloading " + target.name)
+            partial.replace(target)
+            return
+        except (OSError, HTTPException, ValueError) as exc:
+            last_error = exc
+            if getattr(exc, "code", None) == 416 and partial.exists():
+                partial.unlink()
+            if attempt < 4:
+                time.sleep(min(attempt + 1, 3))
     raise RuntimeError(f"Download failed: {url}: {last_error}") from last_error
 
 
@@ -190,15 +243,7 @@ def download_mitdb(data_dir, records=None, workers=4):
         checksum = expected.get(name)
         if checksum is None:
             raise ValueError(f"No official checksum for {name}")
-        if target.exists() and sha256_file(target) == checksum:
-            return name
-        payload = _request_bytes(DATA_URL + name)
-        import hashlib
-        if hashlib.sha256(payload).hexdigest() != checksum:
-            raise ValueError(f"Checksum mismatch downloading {name}")
-        temporary = target.with_suffix(target.suffix + ".part")
-        temporary.write_bytes(payload)
-        temporary.replace(target)
+        _download_verified_file(DATA_URL + name, target, checksum)
         return name
 
     completed, failures = [], []
