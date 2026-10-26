@@ -1,0 +1,11 @@
+**/*.aux
+**/*.log
+**/*.out
+**/*.xdv
+**/*.synctex.gz
+**/qa/
+**/qa-first.png
+**/main.pdf
+**/images/*.png
+**/images/figure_notes.json
+*.zip

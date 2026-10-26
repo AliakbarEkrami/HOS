@@ -47,6 +47,9 @@ small-cohort results do not establish consistent HOS superiority. The archive
 contains conditional bootstrap intervals and local detector errors, including a
 segment with only 65.16% QRS sensitivity. All **103 offline tests** pass.
 
+An illustrated Persian work report is available as a [six-page PDF](output/pdf/HOS_PVC_Report_FA.pdf),
+with its [LaTeX source and figure assets](output/pdf/hos_pvc_report_fa/main.tex).
+
 ## Paper and data
 
 The source paper is included at [Sources/hos_of_hrv.pdf](Sources/hos_of_hrv.pdf). Citation and its separate CC BY-NC 3.0 license are documented in [Sources/README.md](Sources/README.md).
