@@ -2,7 +2,41 @@
 
 Python implementation and reproducibility study of **Cardiac Health Diagnosis Using Higher Order Spectra and Support Vector Machine** by Chua et al. (2009), for biomedical signal processing coursework.
 
-We are rebuilding the published ECG-to-HRV, bispectrum, seven-feature, and SVM pipeline with explicit assumptions, then planning experiments on public ECG datasets. The original 330-record dataset is unavailable to this project. No published accuracy has been reproduced on the original cohort.
+We implement the published ECG-to-HRV, bispectrum, seven-feature, and SVM pipeline with explicit assumptions, and a versioned **LOW_PVC versus HIGH_PVC** experiment on public MIT-BIH data. The original 330-record dataset is unavailable to this project. No published accuracy has been reproduced on the original cohort.
+
+## Public-data PVC experiment
+
+The question is whether seven HOS features distinguish 15-minute segments with
+**at most 1% V beats** from segments with **at least 5% V beats** in new subjects.
+These are experimental burden bands, not clinical diagnoses. The 1–5% gap is
+excluded; LOW_PVC does not mean healthy. This does not recreate the paper's five
+disease classes.
+
+The frozen [mitdb_pvc_v1 protocol](hos_hrv_reproduction/docs/mitdb_pvc_protocol.md)
+defines rhythm/purity and waveform quality checks, MLII selection, paced-record
+exclusion, the shared patient for 201/202, reference/detector branches, eight
+baseline features, seven HOS features, and their combination. Nested 3x3 subject
+grouped SVM evaluation prevents subjects from appearing on both sides of a split.
+2000 subject bootstrap draws quantify conditional OOF uncertainty. Failed
+processing is retained and counts as an incorrect end-to-end prediction.
+
+After installing below, run these commands **from the repository root**:
+
+```shell
+python hos_hrv_reproduction/scripts/run_pipeline.py mitdb-prepare --download --data-dir hos_hrv_reproduction/data/public/mitdb --output-dir hos_hrv_reproduction/results/mitdb_pvc_v1
+python hos_hrv_reproduction/scripts/run_pipeline.py mitdb-extract --run-dir hos_hrv_reproduction/results/mitdb_pvc_v1
+python hos_hrv_reproduction/scripts/run_pipeline.py mitdb-evaluate --run-dir hos_hrv_reproduction/results/mitdb_pvc_v1
+python hos_hrv_reproduction/scripts/run_pipeline.py mitdb-report --run-dir hos_hrv_reproduction/results/mitdb_pvc_v1
+```
+
+The download uses the fixed public version 1.0.0 and verifies official SHA256
+hashes. It downloads 144 signal/header/annotation files (about 90 MiB).
+Data and generated runs are ignored by Git. Downloads resume by checking existing
+hashes. For a second experiment, use a new output directory. A completed run
+contains `report_fa.md`, figures, eligibility audit, both feature tables, QRS
+metrics, frozen settings, input hashes, subject splits and OOF predictions.
+Installed aliases `mitdb-prepare`, `mitdb-extract`, `mitdb-evaluate`, `mitdb-report`
+provide the same commands. The original paper commands below remain available.
 
 ## Paper and data
 
@@ -50,7 +84,7 @@ python -m pip install -r requirements.txt
 python -m pytest hos_hrv_reproduction/tests -q
 ```
 
-The root requirements file installs the local package and development dependencies. Runtime dependencies are NumPy, SciPy, scikit-learn, and WFDB; pytest is used for development. A package-only install is also available with `python -m pip install -e ./hos_hrv_reproduction`.
+The root requirements file installs the local package and development dependencies. Runtime dependencies are NumPy, SciPy, scikit-learn, WFDB and Matplotlib; pytest is used for development. A package-only install is also available with `python -m pip install -e ./hos_hrv_reproduction`.
 
 ## Run experiments
 

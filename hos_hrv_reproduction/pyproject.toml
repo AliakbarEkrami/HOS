@@ -13,6 +13,7 @@ dependencies = [
   "scipy>=1.10",
   "scikit-learn>=1.2",
   "wfdb>=4.1",
+  "matplotlib>=3.7",
 ]
 
 [project.optional-dependencies]
@@ -22,6 +23,10 @@ dev = ["pytest>=7.4"]
 hos-hrv-extract = "hos_hrv_reproduction.cli:extract_main"
 hos-hrv-evaluate = "hos_hrv_reproduction.cli:evaluate_main"
 hos-hrv-stats = "hos_hrv_reproduction.cli:stats_main"
+mitdb-prepare = "hos_hrv_reproduction.mitdb_cli:prepare_main"
+mitdb-extract = "hos_hrv_reproduction.mitdb_cli:extract_main"
+mitdb-evaluate = "hos_hrv_reproduction.mitdb_cli:evaluate_main"
+mitdb-report = "hos_hrv_reproduction.mitdb_cli:report_main"
 
 [tool.setuptools.packages.find]
 where = ["src"]
